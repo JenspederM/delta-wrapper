@@ -68,6 +68,18 @@ tomli = {version = "*", optional = true, markers = "python_full_version <= \"3.1
 toml = ["tomli"]
 
 [[package]]
+name = "coveragepy-lcov"
+version = "0.1.2"
+description = "A simple .coverage to LCOV converter"
+category = "dev"
+optional = false
+python-versions = ">=3.6.3,<4.0.0"
+
+[package.dependencies]
+click = ">=7.1.2"
+coverage = ">=5.5"
+
+[[package]]
 name = "delta-spark"
 version = "2.1.1"
 description = "Python APIs for using Delta Lake with Apache Spark"
@@ -267,7 +279,7 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "2157c02a32af1958559320e3fd6afbfcde51a02189eb7d8302882f6ed422f041"
+content-hash = "2cf3980bc74e103fcfb8a4e8682fa1a22a5edd7681906ec0f6b5dda596eb6775"
 
 [metadata.files]
 attrs = [
@@ -356,6 +368,10 @@ coverage = [
     {file = "coverage-6.5.0-cp39-cp39-win_amd64.whl", hash = "sha256:fc2af30ed0d5ae0b1abdb4ebdce598eafd5b35397d4d75deb341a614d333d987"},
     {file = "coverage-6.5.0-pp36.pp37.pp38-none-any.whl", hash = "sha256:1431986dac3923c5945271f169f59c45b8802a114c8f548d611f2015133df77a"},
     {file = "coverage-6.5.0.tar.gz", hash = "sha256:f642e90754ee3e06b0e7e51bce3379590e76b7f76b708e1a71ff043f87025c84"},
+]
+coveragepy-lcov = [
+    {file = "coveragepy-lcov-0.1.2.tar.gz", hash = "sha256:db6ad0d255d3a8041d30e797a9ec69c77c5963694a6b02a00907b56db7b882a3"},
+    {file = "coveragepy_lcov-0.1.2-py3-none-any.whl", hash = "sha256:7c1e454ada324a1f47fd7cd2de2c6349b9822cc79691b313ed10370e7ce1b08b"},
 ]
 delta-spark = [
     {file = "delta-spark-2.1.1.tar.gz", hash = "sha256:cbc0a280944e1f6599771f8d34662dccddb7431320707f0ef1147e99f9e39dfa"},
