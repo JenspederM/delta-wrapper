@@ -12,7 +12,7 @@ def spark() -> None:
     import pyspark
 
 
-from delta import *
+from delta import configure_spark_with_delta_pip
 
 
 @pytest.fixture(scope="session")
