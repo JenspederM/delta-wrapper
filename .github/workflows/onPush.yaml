@@ -26,7 +26,7 @@ jobs:
           poetry run black . --check
       - name: Test with pytest
         run: |
-          poetry run pytest tests/test_*.py --doctest-modules --junitxml=pytest.xml --cov=com --cov-report=xml:pytest-coverage.xml
+          poetry run pytest tests/test_*.py --doctest-modules --junitxml=pytest.xml --cov=. --cov-report=xml:pytest-coverage.xml
       - name: Pytest coverage comment
         uses: MishaKav/pytest-coverage-comment@main
         with:
