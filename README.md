@@ -1,3 +1,3 @@
 # delta-wrapper
 
-A wrapper for Delta Table
+A wrapper for Delta Table.
