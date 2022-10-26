@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/OpenSourceHelpCommunity/OpenSourceHelpCommunity.github.io/badge.svg?branch=develop)](https://coveralls.io/github/OpenSourceHelpCommunity/OpenSourceHelpCommunity.github.io?branch=develop)
+[![Coverage Status](https://coveralls.io/repos/github/JenspederM/delta-wrapper/badge.svg?branch=test/cov)](https://coveralls.io/github/JenspederM/delta-wrapper?branch=main)
 
 # delta-wrapper
 
