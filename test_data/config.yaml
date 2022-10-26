@@ -1,0 +1,15 @@
+datasets:
+  - df1:
+    input:
+      path: input/test.json
+      ext: json
+    output:
+      path: output/tmp
+      format:
+        out-1:
+          - in-a
+          - in-b
+        out-2:
+          - in-c
+        out-3:
+          - in-d

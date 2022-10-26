@@ -1,5 +1,5 @@
 from pyspark.sql import SparkSession, DataFrame
-from spark_utils import get_log4j_logger
+from deltawrapper.spark_utils import get_log4j_logger
 
 from typing import Dict, List, Union, Optional
 import yaml
