@@ -1,10 +1,13 @@
 import time
 import pytest
 import pyspark
-from deltawrapper.types import Column
+from deltawrapper._types import Column, Config
 from delta import configure_spark_with_delta_pip
 from deltawrapper.spark_utils import get_log4j_logger
 
+import yaml
+
+from deltawrapper._types import Column
 
 # Add fixture for spark session
 @pytest.fixture(scope="session")
@@ -27,31 +30,30 @@ def test_rename_column(spark: pyspark.sql.SparkSession) -> None:
     # Create a test dataframe
     output_cols = {"out-1": ["in-a", "in-b"], "out-2": ["in-c"], "out-3": ["in-d"]}
     output_df = [Column(name, aliases) for name, aliases in output_cols.items()]
+    df_content = [
+        (1, 2, 3, 4, 5),
+        (5, 6, 7, 8, 5),
+        (9, 10, 11, 12, 5),
+    ]
 
-    df = spark.createDataFrame(
-        [
-            (1, 2, 3, 4, 5),
-            (5, 6, 7, 8, 5),
-            (9, 10, 11, 12, 5),
-        ],
-        ["in-a", "in-b", "in-c", "in-d", "in-e"],
+    test_input = ["in-a", "in-b", "in-c", "in-d", "in-e"]
+
+    df_input = spark.createDataFrame(
+        df_content,
+        test_input,
     )
 
-    df_force = df
+    df_force = df_input
 
     logger.info("Testing rename_from_alias with force=True")
     for col in output_df:
         logger.info(f"Renaming column {col.name}")
         df_force = col.rename_from_alias(df_force, force=True)
 
-    assert df.columns == ["in-a", "in-b", "in-c", "in-d", "in-e"]
+    assert df_input.columns == ["in-a", "in-b", "in-c", "in-d", "in-e"]
     assert df_force.columns == ["out-1__in-a", "out-1__in-b", "out-2", "out-3", "in-e"]
 
-    for i in range(5):
-        time.sleep(1)
-        logger.info(f"Waiting for {i} seconds")
-
-    df_fail = df
+    df_fail = df_input
 
     logger.info("Testing rename_from_alias with force=False")
     for col in output_df:
@@ -60,5 +62,5 @@ def test_rename_column(spark: pyspark.sql.SparkSession) -> None:
             with pytest.raises(ValueError):
                 df_fail = col.rename_from_alias(df_fail, force=False)
 
-    assert df.columns == ["in-a", "in-b", "in-c", "in-d", "in-e"]
+    assert df_input.columns == ["in-a", "in-b", "in-c", "in-d", "in-e"]
     assert df_fail.columns == ["in-a", "in-b", "in-c", "in-d", "in-e"]
