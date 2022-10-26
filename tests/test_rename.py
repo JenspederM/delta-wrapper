@@ -1,10 +1,10 @@
+import time
 import pytest
 import pyspark
 from deltawrapper.types import Column
 from delta import configure_spark_with_delta_pip
-from deltawrapper.utils import get_logger
+from deltawrapper.spark_utils import get_log4j_logger
 
-logger = get_logger(__name__)
 
 # Add fixture for spark session
 @pytest.fixture(scope="session")
@@ -22,6 +22,7 @@ def spark() -> pyspark.sql.SparkSession:
 
 
 def test_rename_column(spark: pyspark.sql.SparkSession) -> None:
+    logger = get_log4j_logger(spark, name=__name__)
 
     # Create a test dataframe
     output_cols = {"out-1": ["in-a", "in-b"], "out-2": ["in-c"], "out-3": ["in-d"]}
@@ -45,6 +46,10 @@ def test_rename_column(spark: pyspark.sql.SparkSession) -> None:
 
     assert df.columns == ["in-a", "in-b", "in-c", "in-d", "in-e"]
     assert df_force.columns == ["out-1__in-a", "out-1__in-b", "out-2", "out-3", "in-e"]
+
+    for i in range(5):
+        time.sleep(1)
+        logger.info(f"Waiting for {i} seconds")
 
     df_fail = df
 

@@ -99,4 +99,5 @@ def get_log4j_logger(spark: SparkSession, name: str) -> logging.Logger:
     # Avoid "INFO [py4j.java_gateway.run:2384] Received command c on object id p0"
     logging.getLogger("py4j.java_gateway").setLevel(logging.ERROR)
     logger = spark._jvm.org.apache.log4j
+    spark.sparkContext.setLogLevel("INFO")
     return logger.LogManager.getLogger(name)
