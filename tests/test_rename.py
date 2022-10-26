@@ -1,20 +1,12 @@
 import pytest
 import pyspark
 from deltawrapper.types import Column
+from delta import configure_spark_with_delta_pip
+from deltawrapper.utils import get_logger
 
-import logging
-
-logging.basicConfig(level=logging.INFO)
+logger = get_logger(__name__)
 
 # Add fixture for spark session
-@pytest.fixture(scope="session")
-def spark() -> None:
-    import pyspark
-
-
-from delta import configure_spark_with_delta_pip
-
-
 @pytest.fixture(scope="session")
 def spark() -> pyspark.sql.SparkSession:
     builder = (
@@ -46,9 +38,9 @@ def test_rename_column(spark: pyspark.sql.SparkSession) -> None:
 
     df_force = df
 
-    logging.info("Testing rename_from_alias with force=True")
+    logger.info("Testing rename_from_alias with force=True")
     for col in output_df:
-        logging.info(f"Renaming column {col.name}")
+        logger.info(f"Renaming column {col.name}")
         df_force = col.rename_from_alias(df_force, force=True)
 
     assert df.columns == ["in-a", "in-b", "in-c", "in-d"]
@@ -56,9 +48,9 @@ def test_rename_column(spark: pyspark.sql.SparkSession) -> None:
 
     df_fail = df
 
-    logging.info("Testing rename_from_alias with force=False")
+    logger.info("Testing rename_from_alias with force=False")
     for col in output_df:
-        logging.info(f"Renaming column {col.name}")
+        logger.info(f"Renaming column {col.name}")
         if col == "out-1":
             with pytest.raises(ValueError):
                 df_fail = col.rename_from_alias(df_fail, force=False)
