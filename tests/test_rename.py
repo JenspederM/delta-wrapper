@@ -29,11 +29,11 @@ def test_rename_column(spark: pyspark.sql.SparkSession) -> None:
 
     df = spark.createDataFrame(
         [
-            (1, 2, 3, 4),
-            (5, 6, 7, 8),
-            (9, 10, 11, 12),
+            (1, 2, 3, 4, 5),
+            (5, 6, 7, 8, 5),
+            (9, 10, 11, 12, 5),
         ],
-        ["in-a", "in-b", "in-c", "in-d"],
+        ["in-a", "in-b", "in-c", "in-d", "in-e"],
     )
 
     df_force = df
@@ -43,8 +43,8 @@ def test_rename_column(spark: pyspark.sql.SparkSession) -> None:
         logger.info(f"Renaming column {col.name}")
         df_force = col.rename_from_alias(df_force, force=True)
 
-    assert df.columns == ["in-a", "in-b", "in-c", "in-d"]
-    assert df_force.columns == ["out-1__in-a", "out-1__in-b", "out-2", "out-3"]
+    assert df.columns == ["in-a", "in-b", "in-c", "in-d", "in-e"]
+    assert df_force.columns == ["out-1__in-a", "out-1__in-b", "out-2", "out-3", "in-e"]
 
     df_fail = df
 
@@ -55,5 +55,5 @@ def test_rename_column(spark: pyspark.sql.SparkSession) -> None:
             with pytest.raises(ValueError):
                 df_fail = col.rename_from_alias(df_fail, force=False)
 
-    assert df.columns == ["in-a", "in-b", "in-c", "in-d"]
-    assert df_fail.columns == ["in-a", "in-b", "in-c", "in-d"]
+    assert df.columns == ["in-a", "in-b", "in-c", "in-d", "in-e"]
+    assert df_fail.columns == ["in-a", "in-b", "in-c", "in-d", "in-e"]
